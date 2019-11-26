@@ -19,10 +19,10 @@ class GameObject
 		char display_code; // how the object is presented in the View		 
 		char state; // state of the object
 		
-	private: 
-		GameObject(); // encapsulation, set to private 
 
 	public: 
+		GameObject(); 
+
 		GameObject(char in_code);
 			/* initializes display_code to in_code, id_num to 1, 
 			state to 0. outputs message */ 
