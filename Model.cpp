@@ -5,6 +5,7 @@
 
 using namespace std; 
 
+
 // constructors 
 
 	//default constructor 
@@ -18,34 +19,31 @@ Model::Model()
 	num_centers = 2; 
 	num_gyms = 2;
 
-		// create objects using new, store pointers to them in arrays 
-	this -> center_ptrs = new PokemonCenter*[2]; 
-	this -> gym_ptrs = new PokemonGym*[2]; 
-	this -> pokemon_ptrs = new Pokemon*[2];
-	this -> object_ptrs = new GameObject*[6]; 
+	// create pointers to Point2D vectors
+	// create array of certain types to assign into array 
+	Point2D point1 = Point2D(5,1); 
+		Pokemon* ptrArray1 = new Pokemon(1, point1); 
+		object_ptrs[0] = ptrArray1; 
 
-	// setting object type, id number, initial location to another array 
-	// assigns to game object pointer array as well after declaring new space on heap
-		// Pokemon 1
-	this -> pokemon_ptrs[0] = new Pokemon(1, Point2D(5,1)); 
-	this -> object_ptrs[0] = pokemon_ptrs[0]; 
-		// Pokemon 2
-	this -> pokemon_ptrs[1] = new Pokemon(2, Point2D(10,1)); 
-	this -> object_ptrs[1] = pokemon_ptrs[1]; 
-		// PokemonCenter 1 
-	this -> center_ptrs[0] = new PokemonCenter(1, Point2D(1, 20)); 
-	this -> object_ptrs[2] = center_ptrs[0]; 
-		// PokemonCenter 2 
-	this -> center_ptrs[1] = new PokemonCenter(2, Point2D(10,20)); 
-	this -> object_ptrs[3] = center_ptrs[1]; 
-		// PokemonGym1
-			// default constructed 
-	this -> gym_ptrs[0] = new PokemonGym(); // default constructor 
-	this -> object_ptrs[4] = gym_ptrs[0]; 
-	this -> gym_ptrs[1] = new PokemonGym(2, Point2D(5,5)); 
-	this -> object_ptrs[5] = gym_ptrs[1]; 
+	Point2D point2 = Point2D(10,1); 
+		Pokemon* ptrArray2 = new Pokemon(2, point2); 
+		object_ptrs[1] = ptrArray2; 
 
- 
+	Point2D point3 = Point2D(1,20); 
+		PokemonCenter* ptrArray3 = new PokemonCenter(1, point3); 
+		object_ptrs[2] = ptrArray3; 
+
+	Point2D point4 = Point2D(10,20); 
+		PokemonCenter* ptrArray4 = new PokemonCenter(2, point4); 
+	 	object_ptrs[3] = ptrArray4;
+
+		PokemonGym* ptrArray5 = new PokemonGym(); 
+		object_ptrs[4] = ptrArray5; 
+
+	Point2D point5 = Point2D(5,5);
+		PokemonGym* ptrArray6 = new PokemonGym(2, point5); 
+		object_ptrs[5] = ptrArray6; 
+
 	cout << "Model default constructed" << endl; 
 }
 
@@ -66,7 +64,7 @@ Pokemon* Model::GetPokemonPtr(int id)
 {
 	for (int i = 0; i < num_pokemon; i++)
 	{
-		if (pokemon_ptrs[i] -> getId() == id_num)
+		if (pokemon_ptrs[i] -> GetId() == id_num)
 		{
 			return pokemon_ptrs[i]; 
 		}
@@ -78,7 +76,7 @@ PokemonCenter* Model::GetPokemonCenterPtr(int id)
 {
 	for (int i = 0; i < num_pokemon; i++) 
 	{
-		if (center_ptrs[i] -> getId() == id_num)
+		if (center_ptrs[i] -> GetId() == id_num)
 		{
 			return center_ptrs[i]; 
 		}
@@ -123,10 +121,10 @@ void Model::Display(View& view)
 	view.Clear(); // calls clear function to clear view
 	for (int i = 0; i < num_objects; i++) 
 	{
-		view.plot(object_ptrs[i]); // calls plot function
+		view.Plot(object_ptrs[i]); // calls plot function
 			// generates view display for all of the GameObjects
 	} // exits for loop
-	view.DrawSelf(); // access DrawSelf function from view 
+	view.Draw(); // access DrawSelf function from view 
 
 } // exit display function 
 
