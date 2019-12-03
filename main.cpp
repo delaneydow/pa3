@@ -8,23 +8,34 @@
 #include "Vector2D.h"
 #include "GameObject.h"
 #include "Pokemon.h"
-#include "Building.h"
+#include "building.h"
 #include "PokemonCenter.h"
 #include "PokemonGym.h" 
 #include "View.h"
 #include "Model.h" 
 #include "GameCommand.h"
 
+ class GameObject;
+
+
 int main()
 {
-	// initialze local variables
-	char command; 
-	Model *modelPtr = new Model(); 
-	model -> ShowStatus(); // displays  current time, status of each object 
-	View *viewPtr = new View(); 
-	view -> Clear(); 
+	Model mod; 
+	mod.ShowStatus(); 
+	//mod.Plot(); 
 
-	model ->display(*view); 
+	View vi = View(); 
+
+	int pokemon_id; 
+	int x; 
+	int y; 
+	Model* modelPtr = &mod; 
+	int gym_id; 
+	int center_id; 
+	unsigned int training_units;
+	unsigned int stamina_points;  
+
+	char command; 
 	cout << "Enter command: " << endl; 
 	cin >> command; 
 
@@ -39,7 +50,9 @@ int main()
 	case 'm': // move command
 	{
 		cout << "Enter pokemon ID, x and y coordinates: " << endl; 
-		cin >> pokemon_id >> x >> y >> endl; 
+		cin >> pokemon_id; 
+		cin >> x; 
+		cin >>  y ; 
 		cout << "move" << endl; 
 		DoMoveCommand(*modelPtr, pokemon_id, Point2D(x,y));
 		break; 
@@ -48,7 +61,8 @@ int main()
 	case 'g': // move to gym command
 	{
 		cout << "Enter pokemon ID, gym ID" << endl; 
-		cin >> pokemon_id >> gym_id >> endl; 
+		cin >> pokemon_id ; 
+		cin >>  gym_id ; 
 		cout << "Move towards a Pokemon Gym" << endl;  
 		DoMoveToGymCommand(*modelPtr, pokemon_id, gym_id); 
 		break; 
@@ -57,7 +71,8 @@ int main()
 	case 'c': // move to center command
 	{
 		cout << "Enter pokemon ID, center ID" << endl; 
-		cin >> pokemon_id >> center_id >> endl; 
+		cin >> pokemon_id ; 
+		cin >> center_id ; 
 		cout << "Move towards a Pokemon Center" << endl; 
 		DoMoveToCenterCommand(*modelPtr, pokemon_id, center_id);
 		break; 
@@ -66,7 +81,7 @@ int main()
 	case 's': // stop command
 	{
 		cout << "Enter pokemon ID" << endl; 
-		cin >> pokemon_id >> endl; 
+		cin >> pokemon_id ; 
 		cout << "stop" << endl; 
 		DoStopCommand(*modelPtr, pokemon_id);
 		break; 
@@ -74,14 +89,16 @@ int main()
 
 	case 'r': // stamina amount
 	{
-		cin >> pokemon_id >> stamin_ponts >> endl; 
+		cin >> pokemon_id ; 
+		cin >>  stamina_points;  
 		cout << "recover at a Pokemon Center" << endl; 
-		DoRecoverInCenterCommand(*modelPtr, pokemon_id, stamina_points)
+		DoRecoverInCenterCommand(*modelPtr, pokemon_id, stamina_points); 
 	}
 
 	case 't': // unit amount
 	{
-		cin >> pokemon_id >> training_units >> endl; 
+		cin >> pokemon_id ; 
+		cin >> training_units;  
 		cout << "complete " << training_units << " training units at a Pokemon Gym" << endl; 
 		DoTrainInGymCommand(*modelPtr, pokemon_id, training_units);
 		break; 
@@ -90,14 +107,14 @@ int main()
 	case 'v': // go command
 	{
 		cout << "go" << endl; 
-		DoGoCommand(*modelPtr, *viewPtr);
+		//DoGoCommand(*modelPtr, *viewPtr);
 		break; 
 	}
 
 	case 'x': // run command
 	{
 		cout << "run" << endl; 
-		DoRunCommand(*modelPtr, *viewPtr); // repeats loop 
+		//DoRunCommand(*modelPtr, *viewPtr); // repeats loop 
 		break; 
 	} 
 
@@ -106,14 +123,13 @@ int main()
 
 } // ends while loop
 
-	if (command = 'q') 
+	if (command == 'q') 
 	{
 		cout << "quit." << endl; 
 	}
 	cout << "Ending program" << endl;
-	model ->Display(*viewPtr);
-	view -> ~View(); // deconstructs view 
-	model -> ~Model(); // deconstructs model 
+	//View -> ~View(); // deconstructs view 
+	//Model -> ~Model(); // deconstructs model 
 
 
 	return 0; 
